@@ -9,6 +9,6 @@ import kotlin.annotation.AnnotationRetention.RUNTIME
  */
 
 @Scope
-@Documented
+@MustBeDocumented
 @Retention(RUNTIME)
 annotation class PerActivity

@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.chenzhang.kotdroid.KotDroidApplication
+import com.chenzhang.kotdroid.MainActivity
 import com.chenzhang.kotdroid.R
-import com.chenzhang.kotdroid.injection.PerActivityModule
 import com.chenzhang.kotdroid.model.StringProvider
 import java.util.*
 import javax.inject.Inject
@@ -26,7 +25,8 @@ class RedditFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        KotDroidApplication.appComponent.getPerActivityComponent(PerActivityModule()).inject(this)
+
+        (activity as MainActivity).perActivityComponent.inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
