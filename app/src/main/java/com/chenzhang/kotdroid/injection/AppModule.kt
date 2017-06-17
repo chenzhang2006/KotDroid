@@ -1,9 +1,9 @@
 package com.chenzhang.kotdroid.injection
 
 import android.app.Application
-import com.chenzhang.kotdroid.model.StringProvider
 import dagger.Module
 import dagger.Provides
+import java.util.*
 import javax.inject.Singleton
 
 /**
@@ -18,9 +18,5 @@ public class AppModule(val application: Application) {
 
     @Provides
     @Singleton
-    fun providesGreetingProvider(): StringProvider {
-        return object : StringProvider {
-            override fun get() = "Hello from Dagger App Module"
-        }
-    }
+    fun providesDate(): Date = Date()
 }

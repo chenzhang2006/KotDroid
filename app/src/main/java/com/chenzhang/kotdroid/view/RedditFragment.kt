@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.chenzhang.kotdroid.KotDroidApplication
 import com.chenzhang.kotdroid.R
+import com.chenzhang.kotdroid.injection.PerActivityModule
 import com.chenzhang.kotdroid.model.StringProvider
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -16,13 +18,15 @@ import javax.inject.Inject
  */
 class RedditFragment: Fragment() {
 
-    @Inject lateinit var greetingsProvider: StringProvider
+    @Inject lateinit var urlProvider: StringProvider
+    @Inject lateinit var initializedDate: Date
 
     val greetingsText by lazy { view?.findViewById(R.id.greetings) as TextView}
+    val urlText by lazy { view?.findViewById(R.id.reddit_url) as TextView }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        KotDroidApplication.appComponent.inject(this)
+        KotDroidApplication.appComponent.getPerActivityComponent(PerActivityModule()).inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,6 +35,7 @@ class RedditFragment: Fragment() {
 
     override fun onResume() {
         super.onResume()
-        greetingsText.text = greetingsProvider.get()
+        greetingsText.text = "Hello! ${initializedDate}"
+        urlText.text = "Url: ${urlProvider.get()}"
     }
 }

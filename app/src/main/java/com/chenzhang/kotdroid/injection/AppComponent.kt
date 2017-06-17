@@ -1,6 +1,5 @@
 package com.chenzhang.kotdroid.injection
 
-import com.chenzhang.kotdroid.view.RedditFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -10,5 +9,5 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = arrayOf(AppModule::class))
 interface AppComponent {
-    fun inject(target: RedditFragment)
+    fun getPerActivityComponent(module: PerActivityModule): PerActivityComponent
 }
