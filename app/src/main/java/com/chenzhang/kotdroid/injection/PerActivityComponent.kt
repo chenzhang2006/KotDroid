@@ -1,6 +1,6 @@
 package com.chenzhang.kotdroid.injection
 
-import com.chenzhang.kotdroid.view.RedditFragment
+import com.chenzhang.kotdroid.view.GitHubReposFragment
 import dagger.Subcomponent
 
 /**
@@ -10,5 +10,5 @@ import dagger.Subcomponent
 @PerActivity
 @Subcomponent(modules = arrayOf(PerActivityModule::class))
 interface PerActivityComponent {
-    fun inject(target: RedditFragment)
+    fun inject(target: GitHubReposFragment)
 }
