@@ -42,6 +42,10 @@ class GitHubReposFragment : Fragment(), GitHubReposMvp.View {
         presenter.detachView()
     }
 
+    override fun showLoading() {
+        greetingsText.text = "loading..."
+    }
+
     override fun showRepos(repos: List<GitHubRepo>) {
         greetingsText.text = "Succeeded! ${repos}"
     }

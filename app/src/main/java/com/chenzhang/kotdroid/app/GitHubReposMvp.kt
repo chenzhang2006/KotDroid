@@ -9,6 +9,7 @@ import com.xfinity.common.app.Mvp
 interface GitHubReposMvp : Mvp {
 
     interface View : Mvp.View {
+        fun showLoading()
         fun showRepos(repos: List<GitHubRepo>)
         fun showLoadingError()
     }

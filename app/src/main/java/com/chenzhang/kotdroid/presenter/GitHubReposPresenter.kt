@@ -20,6 +20,7 @@ class GitHubReposPresenter : Presenter {
 
     override fun attachView(view: View) {
         this.view = view
+        view.showLoading()
         loadRepos()
     }
 
