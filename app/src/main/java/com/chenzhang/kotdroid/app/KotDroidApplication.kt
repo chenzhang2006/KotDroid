@@ -1,4 +1,4 @@
-package com.chenzhang.kotdroid
+package com.chenzhang.kotdroid.app
 
 import android.app.Application
 import com.chenzhang.kotdroid.injection.AppComponent

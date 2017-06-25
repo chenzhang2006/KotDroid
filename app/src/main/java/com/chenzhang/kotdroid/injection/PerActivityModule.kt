@@ -1,6 +1,6 @@
 package com.chenzhang.kotdroid.injection
 
-import com.chenzhang.kotdroid.model.StringProvider
+import com.chenzhang.kotdroid.presenter.GitHubReposPresenter
 import dagger.Module
 import dagger.Provides
 
@@ -9,12 +9,11 @@ import dagger.Provides
  */
 @Module
 class PerActivityModule() {
+
     @Provides
     @PerActivity
-    fun providesRedditUrlProvider(): StringProvider {
-        return object : StringProvider {
-            override fun get(): String = "https://www.reddit.com/r/androiddev/hot.json?limit=10"
-        }
+    fun provideGitHubReposPresenter(): GitHubReposPresenter {
+        return GitHubReposPresenter()
     }
 
 }

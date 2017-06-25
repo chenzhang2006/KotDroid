@@ -1,10 +1,12 @@
-package com.chenzhang.kotdroid
+package com.chenzhang.kotdroid.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.chenzhang.kotdroid.app.KotDroidApplication
+import com.chenzhang.kotdroid.R.id
+import com.chenzhang.kotdroid.R.layout
 import com.chenzhang.kotdroid.injection.PerActivityComponent
 import com.chenzhang.kotdroid.injection.PerActivityModule
-import com.chenzhang.kotdroid.view.GitHubReposFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,10 +16,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_main)
+        setContentView(layout.activity_main)
 
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, GitHubReposFragment())
+                .replace(id.fragment_container, GitHubReposFragment())
                 .addToBackStack(null)
                 .commit()
 

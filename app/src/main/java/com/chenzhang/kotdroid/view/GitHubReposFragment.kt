@@ -6,29 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.chenzhang.kotdroid.MainActivity
 import com.chenzhang.kotdroid.R
-import com.chenzhang.kotdroid.api.GitHubService
+import com.chenzhang.kotdroid.app.GitHubReposMvp
+import com.chenzhang.kotdroid.injection.PerActivity
 import com.chenzhang.kotdroid.model.GitHubRepo
-import com.chenzhang.kotdroid.model.StringProvider
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
+import com.chenzhang.kotdroid.presenter.GitHubReposPresenter
 import javax.inject.Inject
 
 /**
  * Created by czhang000 on 6/15/17.
  */
-class GitHubReposFragment : Fragment() {
+class GitHubReposFragment : Fragment(), GitHubReposMvp.View {
 
-    @Inject lateinit var urlProvider: StringProvider
-    @Inject lateinit var initializedDate: Date
+    @Inject @PerActivity lateinit var presenter: GitHubReposPresenter
 
     val greetingsText by lazy { view?.findViewById(R.id.greetings) as TextView}
-    val urlText by lazy { view?.findViewById(R.id.url) as TextView }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,25 +34,20 @@ class GitHubReposFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        greetingsText.text = "Hello! ${initializedDate}"
-        urlText.text = "Url: ${urlProvider.get()}"
-
-        val retrofit = Retrofit.Builder()
-                .baseUrl("https://api.github.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        val service = retrofit.create(GitHubService::class.java)
-        val call = service.listRepos("chenzhang2006")
-        call.enqueue(object : Callback<List<GitHubRepo>> {
-            override fun onFailure(call: Call<List<GitHubRepo>>?, t: Throwable?) {
-                greetingsText.text = "Failed: ${t.toString()}"
-            }
-
-            override fun onResponse(call: Call<List<GitHubRepo>>?, response: Response<List<GitHubRepo>>?) {
-                greetingsText.text = "Succeeded: ${response?.body()}"
-            }
-
-        })
-
+        presenter.attachView(this)
     }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.detachView()
+    }
+
+    override fun showRepos(repos: List<GitHubRepo>) {
+        greetingsText.text = "Succeeded! ${repos}"
+    }
+
+    override fun showLoadingError() {
+        greetingsText.text = "Loading failed"
+    }
+
 }

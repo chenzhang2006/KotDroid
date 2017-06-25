@@ -3,7 +3,6 @@ package com.chenzhang.kotdroid.injection
 import android.app.Application
 import dagger.Module
 import dagger.Provides
-import java.util.*
 import javax.inject.Singleton
 
 /**
@@ -16,7 +15,4 @@ public class AppModule(val application: Application) {
     @Singleton
     fun providesApplication() = application
 
-    @Provides
-    @Singleton
-    fun providesDate(): Date = Date()
 }
