@@ -11,7 +11,7 @@ interface GitHubReposMvp : Mvp {
     interface View : Mvp.View {
         fun showLoading()
         fun showRepos(repos: List<GitHubRepo>)
-        fun showLoadingError()
+        fun showLoadingError(t: Throwable?)
     }
 
     interface Presenter : Mvp.Presenter<View> {

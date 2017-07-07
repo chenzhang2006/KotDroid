@@ -37,7 +37,7 @@ class GitHubReposPresenter : Presenter {
         val call = service.listRepos("chenzhang2006")
         call.enqueue(object : Callback<List<GitHubRepo>> {
             override fun onFailure(call: Call<List<GitHubRepo>>?, t: Throwable?) {
-                view?.showLoadingError()
+                view?.showLoadingError(t)
             }
 
             override fun onResponse(call: Call<List<GitHubRepo>>?, response: Response<List<GitHubRepo>>?) {

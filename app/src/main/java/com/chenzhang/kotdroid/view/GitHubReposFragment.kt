@@ -50,8 +50,8 @@ class GitHubReposFragment : Fragment(), GitHubReposMvp.View {
         greetingsText.text = "Succeeded! ${repos}"
     }
 
-    override fun showLoadingError() {
-        greetingsText.text = "Loading failed"
+    override fun showLoadingError(t: Throwable?) {
+        greetingsText.text = "Loading failed ${t as Exception}"
     }
 
 }
