@@ -1,8 +1,12 @@
 package com.chenzhang.kotdroid.injection
 
+import com.chenzhang.kotdroid.api.GitHubService
+import com.chenzhang.kotdroid.model.ApiManager
 import com.chenzhang.kotdroid.presenter.GitHubReposPresenter
 import dagger.Module
 import dagger.Provides
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Created by czhang000 on 6/17/17.
@@ -12,8 +16,29 @@ class PerActivityModule() {
 
     @Provides
     @PerActivity
-    fun provideGitHubReposPresenter(): GitHubReposPresenter {
-        return GitHubReposPresenter()
+    fun provideGitHubReposPresenter(apiManager: ApiManager): GitHubReposPresenter {
+        return GitHubReposPresenter(apiManager)
     }
 
+    @Provides
+    @PerActivity
+    fun provideRetrofit(): Retrofit {
+        //TODO verify created only once
+        return Retrofit.Builder()
+                .baseUrl("https://api.github.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+    }
+
+    @Provides
+    @PerActivity
+    fun provideGitHubService(retrofit: Retrofit): GitHubService {
+        return retrofit.create(GitHubService::class.java)
+    }
+
+    @Provides
+    @PerActivity
+    fun provideApiManager(gitHubService: GitHubService): ApiManager {
+        return ApiManager(gitHubService)
+    }
 }
