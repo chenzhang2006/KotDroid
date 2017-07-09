@@ -23,7 +23,6 @@ class PerActivityModule() {
     @Provides
     @PerActivity
     fun provideRetrofit(): Retrofit {
-        //TODO verify created only once
         return Retrofit.Builder()
                 .baseUrl("https://api.github.com/")
                 .addConverterFactory(GsonConverterFactory.create())
