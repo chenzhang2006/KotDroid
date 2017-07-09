@@ -7,11 +7,10 @@ Purpose: Build modern Android app with
 - MVP
 - RxJava
 - Android framework's new features like ConstraintLayout	
-- Misc. such as
-    - Picasso
-    - Http client: Retrofit or OkHttp
-    - Junit
-    - Mock libs: Mockito or JMockit
-    - JSON parsing libs
+- Http client: Retrofit(OkHttp, JSON)
+- Junit + Mock
+- Picasso
 
-Ref link: https://www.reddit.com/r/androiddev/hot.json?limit=10
+Ref link:
+https://api.github.com/users/{user}/repos/ 
+https://www.reddit.com/r/androiddev/hot.json?limit=10

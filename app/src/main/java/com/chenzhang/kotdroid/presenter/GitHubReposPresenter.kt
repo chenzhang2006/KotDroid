@@ -4,10 +4,8 @@ import com.chenzhang.kotdroid.app.GitHubReposMvp
 import com.chenzhang.kotdroid.app.GitHubReposMvp.Presenter
 import com.chenzhang.kotdroid.app.GitHubReposMvp.View
 import com.chenzhang.kotdroid.model.ApiManager
-import com.chenzhang.kotdroid.model.GitHubRepo
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by czhang000 on 6/23/17.
@@ -27,14 +25,18 @@ class GitHubReposPresenter(val apiManager: ApiManager) : Presenter {
 
     override fun loadRepos() {
         view?.showLoading()
-        apiManager.loadRepoForUser("chenzhang2006", object : Callback<List<GitHubRepo>> {
-            override fun onFailure(call: Call<List<GitHubRepo>>?, t: Throwable?) {
-                view?.showLoadingError(t)
-            }
-
-            override fun onResponse(call: Call<List<GitHubRepo>>?, response: Response<List<GitHubRepo>>?) {
-                view?.showRepos(response?.body() ?: emptyList())
-            }
-        })
+        apiManager.loadRepoForUser("chenzhang2006")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        {
+                            repos ->
+                            view?.showRepos(repos ?: emptyList())
+                        },
+                        {
+                            e ->
+                            view?.showLoadingError(e)
+                        }
+                )
     }
 }
