@@ -5,6 +5,7 @@ import com.chenzhang.kotdroid.app.GitHubReposMvp.Presenter
 import com.chenzhang.kotdroid.app.GitHubReposMvp.View
 import com.chenzhang.kotdroid.model.ApiManager
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 /**
@@ -13,6 +14,7 @@ import io.reactivex.schedulers.Schedulers
 class GitHubReposPresenter(val apiManager: ApiManager) : Presenter {
 
     private var view: GitHubReposMvp.View? = null
+    private val compositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
 
     override fun attachView(view: View) {
         this.view = view
@@ -21,11 +23,12 @@ class GitHubReposPresenter(val apiManager: ApiManager) : Presenter {
 
     override fun detachView() {
         this.view = null
+        compositeDisposable.clear()
     }
 
     override fun loadRepos() {
         view?.showLoading()
-        apiManager.loadRepoForUser("chenzhang2006")
+        compositeDisposable.add(apiManager.loadRepoForUser("chenzhang2006")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -38,5 +41,6 @@ class GitHubReposPresenter(val apiManager: ApiManager) : Presenter {
                             view?.showLoadingError(e)
                         }
                 )
+        )
     }
 }
