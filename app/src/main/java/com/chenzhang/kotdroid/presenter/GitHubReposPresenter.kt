@@ -34,7 +34,7 @@ class GitHubReposPresenter(val apiManager: ApiManager) : Presenter {
                 .subscribe(
                         {
                             repos ->
-                            view?.showRepos(repos ?: emptyList())
+                            view?.showRepos(repos)
                         },
                         {
                             e ->
