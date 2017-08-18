@@ -31,10 +31,11 @@ class MainActivity : AppCompatActivity() {
 }
 
 inline fun FragmentManager.doTransaction(transactionFunction: FragmentTransaction.() -> Unit) {
-    val fragmentTransaction = beginTransaction()
-    fragmentTransaction.transactionFunction()
-    fragmentTransaction.addToBackStack(null)
-    fragmentTransaction.commit()
+    with(beginTransaction()) {
+        transactionFunction()
+        addToBackStack(null)
+        commit()
+    }
 }
 
 fun AppCompatActivity.replaceFragment(fragment: Fragment, id: Int) {
