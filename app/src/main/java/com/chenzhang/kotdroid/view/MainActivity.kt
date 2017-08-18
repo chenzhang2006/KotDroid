@@ -1,10 +1,13 @@
 package com.chenzhang.kotdroid.view
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
-import com.chenzhang.kotdroid.app.KotDroidApplication
 import com.chenzhang.kotdroid.R.id
 import com.chenzhang.kotdroid.R.layout
+import com.chenzhang.kotdroid.app.KotDroidApplication
 import com.chenzhang.kotdroid.injection.PerActivityComponent
 import com.chenzhang.kotdroid.injection.PerActivityModule
 
@@ -18,15 +21,26 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(layout.activity_main)
 
-        supportFragmentManager.beginTransaction()
-                .replace(id.fragment_container, GitHubReposFragment())
-                .addToBackStack(null)
-                .commit()
-
+        replaceFragment(GitHubReposFragment(), id.fragment_container)
     }
 
     override fun onRetainCustomNonConfigurationInstance(): Any {
         //to retain Dagger subcomponent in Activity lifetime(survive orientation change, background, backstack...)
         return perActivityComponent
     }
+}
+
+inline fun FragmentManager.doTransaction(transactionFunction: FragmentTransaction.() -> Unit) {
+    val fragmentTransaction = beginTransaction()
+    fragmentTransaction.transactionFunction()
+    fragmentTransaction.addToBackStack(null)
+    fragmentTransaction.commit()
+}
+
+fun AppCompatActivity.replaceFragment(fragment: Fragment, id: Int) {
+    supportFragmentManager.doTransaction { replace(id, fragment) }
+}
+
+fun AppCompatActivity.addFragment(fragment: Fragment, id: Int) {
+    supportFragmentManager.doTransaction { add(id, fragment) }
 }
