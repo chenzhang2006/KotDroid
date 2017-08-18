@@ -64,15 +64,16 @@ class GitHubReposFragment : Fragment(), GitHubReposMvp.View {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder
                 = ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.repo_list_item, parent, false))
 
-        override fun getItemCount(): Int = repoList.size
-
-
         override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
             holder.repoName.text = repoList[position].name
+            holder.repoId.text = repoList[position].id
         }
+
+        override fun getItemCount(): Int = repoList.size
 
         class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val repoName by lazy { itemView.findViewById(R.id.repo_name) as TextView }
+            val repoId by lazy { itemView.findViewById(R.id.repo_id) as TextView }
         }
 
     }
