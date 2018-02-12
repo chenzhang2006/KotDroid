@@ -8,8 +8,8 @@ Purpose: Build modern Android app with
 - RxJava
 - Android framework's new features like ConstraintLayout	
 - Http client: Retrofit(OkHttp, JSON)
-- Junit + Mock
-- Picasso
+- Junit + Mock (TBD)
+- Picasso (TBD)
 
 Ref link:
 https://api.github.com/users/{user}/repos/ 
