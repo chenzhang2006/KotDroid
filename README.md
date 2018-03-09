@@ -1,6 +1,6 @@
 # KotDroid
 
-Purpose: Build modern Android app with
+Purpose: Build modern Android app(github repo) to illustrate sample usage of
 
 - Kotlin
 - Dagger 2
